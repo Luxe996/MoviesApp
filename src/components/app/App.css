@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #F7F7F7;
+}
+
+.wrapper {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1010px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+.header {
+    margin-bottom: 32px;
+}
+
+.main {
+    flex: 1 1 auto;
+}
