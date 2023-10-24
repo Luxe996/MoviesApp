@@ -2,17 +2,19 @@ import './MovieCard.css'
 import { format } from 'date-fns'
 const MovieCard = (props) => {
   const {
-    filmTitle,
-    filmOverview,
+    title,
+    overview,
     filmReleaseDate,
-    filmPosterPath,
-    filmVoteAverage,
+    poster_path,
+    vote_average,
     // filmGenres,
     // filmChangeRating,
     // filmRating,
   } = props
 
-  const filmPoster = `https://image.tmdb.org/t/p/original${filmPosterPath}`
+  console.log(props)
+
+  const filmPoster = `https://image.tmdb.org/t/p/original${poster_path}`
 
   let dateFormatted
   try {
@@ -31,13 +33,13 @@ const MovieCard = (props) => {
 
   return (
     <li className="card">
-      <img className="card__poster" src={filmPosterPath ? filmPoster : 'noFilmPoster'} alt="Постер фильма" />
+      <img className="card__poster" src={poster_path ? filmPoster : 'noFilmPoster'} alt="Постер фильма" />
       <div className="card__info">
-        <h3 className="info__title">{filmTitle}</h3>
+        <h3 className="info__title">{title}</h3>
         <p className="info__date">{dateFormatted}</p>
         <ul className="info__genres"></ul>
-        <p className="info__description">{textAbbreviation(filmOverview)}</p>
-        <span className="info__rating"> {filmVoteAverage}</span>
+        <p className="info__description">{textAbbreviation(overview)}</p>
+        <span className="info__rating"> {vote_average}</span>
       </div>
     </li>
   )
