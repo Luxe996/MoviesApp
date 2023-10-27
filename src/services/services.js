@@ -10,10 +10,11 @@ export default class TMDBService {
     return await res.json()
   }
 
-  async getFilms() {
+  async searchMovies(query, page) {
     const res = await this.getResource(
-      `search/movie?api_key=${TMDBService.apiKey}&language=en-US&query='return'&include_adult=false`
+      `search/movie?api_key=${TMDBService.apiKey}&language=en-US&query=${query}&page=${page}&include_adult=false`
     )
-    return { moviesSearch: res.results }
+    const totalResults = await res.total_results
+    return { moviesSearch: res.results, totalResults }
   }
 }

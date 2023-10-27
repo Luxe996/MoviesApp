@@ -8,6 +8,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 100vh;
     max-width: 1010px;
     margin: 0 auto;
@@ -15,7 +16,14 @@
 }
 
 .header {
-    margin-bottom: 32px;
+    margin: 32px 0;
+    width: 100%;
+}
+
+.search-bar {
+    width: 95%;
+    margin-left: 16px;
+    margin-bottom: 8px;
 }
 
 .main {

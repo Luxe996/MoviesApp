@@ -1,18 +1,7 @@
 import './MovieCard.css'
 import { format } from 'date-fns'
 const MovieCard = (props) => {
-  const {
-    title,
-    overview,
-    filmReleaseDate,
-    poster_path,
-    vote_average,
-    // filmGenres,
-    // filmChangeRating,
-    // filmRating,
-  } = props
-
-  console.log(props)
+  const { title, overview, filmReleaseDate, poster_path, vote_average } = props
 
   const filmPoster = `https://image.tmdb.org/t/p/original${poster_path}`
 
