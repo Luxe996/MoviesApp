@@ -1,37 +1,45 @@
 import './MovieCard.css'
 import { format } from 'date-fns'
-const MovieCard = (props) => {
-  const { title, overview, filmReleaseDate, poster_path, vote_average } = props
+import { Component } from 'react'
 
-  const filmPoster = `https://image.tmdb.org/t/p/original${poster_path}`
+import MovieInfo from './MovieInfo'
+import MovieDescription from './MovieDescription'
 
-  let dateFormatted
-  try {
-    dateFormatted = format(new Date(filmReleaseDate), 'MMMM d, yyyy')
-  } catch (error) {
-    dateFormatted = ''
-  }
-
-  const textAbbreviation = (description) => {
-    if (typeof description === 'undefined') {
-      return ''
+export default class MovieCard extends Component {
+  componentDidUpdate(prevProps) {
+    const { rating } = this.props
+    if (rating !== prevProps.rating) {
+      this.setState({
+        rating,
+      })
     }
-    const indexOfSpaceAfterTruncate = description.indexOf(' ', 100)
-    return description.slice(0, indexOfSpaceAfterTruncate).concat('…')
   }
 
-  return (
-    <li className="card">
-      <img className="card__poster" src={poster_path ? filmPoster : 'noFilmPoster'} alt="Постер фильма" />
-      <div className="card__info">
-        <h3 className="info__title">{title}</h3>
-        <p className="info__date">{dateFormatted}</p>
-        <ul className="info__genres"></ul>
-        <p className="info__description">{textAbbreviation(overview)}</p>
-        <span className="info__rating"> {vote_average}</span>
-      </div>
-    </li>
-  )
-}
+  render() {
+    const { title, overview, release_date, poster_path, vote_average, genre_ids, rating, id, onRate } = this.props
 
-export default MovieCard
+    const filmPoster = `https://image.tmdb.org/t/p/original${poster_path}`
+
+    let dateFormatted
+    try {
+      dateFormatted = format(new Date(release_date), 'MMMM d, yyyy')
+    } catch (error) {
+      dateFormatted = ''
+    }
+
+    return (
+      <li className="movie-container">
+        <img className="movie-poster" src={poster_path ? filmPoster : 'noFilmPoster'} alt="Постер фильма" />
+        <div className="movie-layout">
+          <MovieInfo
+            genreIds={genre_ids}
+            voteAverage={vote_average}
+            releaseDate={dateFormatted}
+            originalTitle={title}
+          />
+          <MovieDescription overview={overview} rating={rating} id={id} onRate={onRate} />
+        </div>
+      </li>
+    )
+  }
+}

@@ -1,0 +1,19 @@
+.movie-description {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom: auto;
+}
+
+.movie-footer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.movie-rate {
+    align-self: flex-end;
+    flex-wrap: nowrap;
+}
