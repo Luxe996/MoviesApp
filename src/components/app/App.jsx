@@ -211,8 +211,6 @@ export default class App extends Component {
         error: false,
         message: '',
       })
-    } else {
-      this.search()
     }
   }
 
