@@ -199,9 +199,28 @@ export default class App extends Component {
     }
   }
 
+  handleTabChange = async (activeKey) => {
+    if (activeKey === '2') {
+      const res = await this.tmdbService.getRatedMovies()
+      const results = await res.results
+      this.setState({
+        currentPage: 1,
+        movies: [],
+        ratedMovies: results,
+        isLoading: false,
+        error: false,
+        message: '',
+      })
+    } else {
+      this.search()
+    }
+  }
+
   render() {
     const { searchValue, currentPage, movies, ratedMovies, ratedCount, isLoading, error, message, totalResults } =
       this.state
+
+    console.log(searchValue)
 
     const spinner = isLoading ? <Spin /> : null
     const alert = error ? <Alert message={message} type="error" /> : null
@@ -215,7 +234,7 @@ export default class App extends Component {
     return (
       <div className="wrapper">
         <ServiceProvider value={this.allMovieGenres}>
-          <Tabs defaultActiveKey="1" className="center-layout">
+          <Tabs defaultActiveKey="1" className="center-layout" onChange={this.handleTabChange}>
             <TabPane tab="Search" key="1" className="center-layout">
               <Input.Search
                 placeholder="Type to search…"

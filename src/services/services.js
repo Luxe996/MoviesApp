@@ -2,9 +2,8 @@ export default class TMDBService {
   _apiBase = 'https://api.themoviedb.org/3'
   static apiKey = '0306f6bc89fedd96c5a7c3bf327a104d'
 
-  guestSessionId = null
+  guestSessionId = localStorage.getItem('SessionId') || null
   async getResource(url) {
-    // const res = await fetch(`${this._apiBase}${url}`)
     let res
     try {
       res = await fetch(url)
@@ -25,7 +24,11 @@ export default class TMDBService {
   }
   async searchMovies(query, page) {
     const searchUrl = `${this._apiBase}${'/search/movie'}`
-    const url = `${searchUrl}?query=${query}&api_key=${TMDBService.apiKey}&page=${page}&include_adult=false&language=en-US`
+    const url = `${searchUrl}?query=${query}&api_key=${
+      TMDBService.apiKey
+    }&page=${page}&include_adult=false&language=en-US&${
+      this.guestSessionId ? `guest_session_id=${this.guestSessionId}` : ''
+    }`
     const res = await this.getResource(url)
     const results = await res.results
     const totalResults = await res.total_results
@@ -53,10 +56,13 @@ export default class TMDBService {
 
     const guestSessionId = response.guest_session_id
 
+    localStorage.setItem('SessionId', guestSessionId)
+
     return guestSessionId
   }
   async rate(value, id) {
     const rateUrl = `${this._apiBase}/movie/${id}/rating`
+    console.log('id', this.guestSessionId)
     if (this.guestSessionId === null) {
       this.guestSessionId = await this.createGuestSession()
     }
@@ -84,6 +90,7 @@ export default class TMDBService {
     return null
   }
   async getRatedMovies() {
+    console.log('попал')
     if (this.guestSessionId === null) {
       this.guestSessionId = await this.createGuestSession()
     }
