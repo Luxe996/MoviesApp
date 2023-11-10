@@ -205,7 +205,6 @@ export default class App extends Component {
       const results = await res.results
       this.setState({
         currentPage: 1,
-        movies: [],
         ratedMovies: results,
         isLoading: false,
         error: false,
